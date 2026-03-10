@@ -8,7 +8,6 @@ export default async function BlogPostPage({ params }: { params: { id: string } 
     const { id } = await params;
     const blogData = await getBlogData();
     const postData = blogData[id]
-    console.log("postData :", postData)
     return (
         <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-blue-100">
             <Navbar />
@@ -21,32 +20,32 @@ export default async function BlogPostPage({ params }: { params: { id: string } 
                     <span>/</span>
                     <Link href="/blog" className="hover:text-gray-900 transition-colors">Blog</Link>
                     <span>/</span>
-                    <span className="text-gray-900 font-medium">Design Insights</span>
+                    <span className="text-gray-900 font-medium">{postData.topic}</span>
                 </nav>
 
                 {/* Article Header */}
                 <header className="mb-12">
                     <div className="flex items-center gap-3 mb-6">
                         <span className="inline-block px-3 py-1 text-xs font-semibold text-blue-700 bg-blue-50 rounded-full">
-                            UI/UX Design
+                            {postData.topic}
                         </span>
-                        <span className="text-gray-500 text-sm">March 10, 2026</span>
+                        <span className="text-gray-500 text-sm">{postData.month} 2025</span>
                     </div>
 
                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 mb-8 leading-tight">
-                        Mastering UI Elements: A Practical Guide for Modern Designers
+                        {postData.blog_heading}
                     </h1>
 
                     <div className="flex items-center justify-between py-6 border-y border-gray-100">
                         <div className="flex items-center gap-4">
                             <img
-                                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"
-                                alt="Jennifer Taylor"
+                                src={postData.avatar}
+                                alt={postData.name}
                                 className="w-12 h-12 rounded-full object-cover"
                             />
                             <div>
-                                <h3 className="font-semibold text-gray-900">Jennifer Taylor</h3>
-                                <p className="text-sm text-gray-500">Senior Product Designer</p>
+                                <h3 className="font-semibold text-gray-900">{postData.name}</h3>
+                                <p className="text-sm text-gray-500">{postData.job_roles}</p>
                             </div>
                         </div>
 
@@ -66,7 +65,7 @@ export default async function BlogPostPage({ params }: { params: { id: string } 
                 {/* Featured Image */}
                 <div className="relative w-full aspect-video rounded-3xl overflow-hidden mb-12 bg-gray-100">
                     <img
-                        src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                        src={postData.blog_image}
                         alt="Designers working around a laptop"
                         className="absolute inset-0 w-full h-full object-cover"
                     />
@@ -75,50 +74,45 @@ export default async function BlogPostPage({ params }: { params: { id: string } 
                 {/* Article Content */}
                 <article className="prose prose-lg max-w-none text-gray-600 prose-headings:text-gray-900 prose-a:text-blue-600 hover:prose-a:text-blue-500 prose-img:rounded-2xl">
                     <p className="text-xl leading-relaxed mb-8">
-                        The foundation of every great product lies not just in what it does, but in how it feels to use. Modern user interfaces require a delicate balance of aesthetic appeal, intuitive layout, and responsive feedback. In this guide, we explore the essential pillars of crafting interfaces that users love.
+                        {postData.blogtext}
                     </p>
 
                     <h2>Understanding the Basics</h2>
                     <p>
-                        Before diving into high-fidelity mockups, it is absolutely essential to establish a strong structural foundation. Think of UI components as Lego blocks. Each piece needs to connect logically and predictably. If buttons look like inputs, or inputs look like disabled states, the user's mental model fractures.
+                        {postData.para}
                     </p>
 
                     <p>
-                        The fundamental rule of modern UI is <strong>clarity over cleverness</strong>. Your interface shouldn't make users think. It should guide them naturally toward their intended goal with minimal cognitive load.
+                        {postData.blogtext}
                     </p>
 
                     <blockquote className="border-l-4 border-blue-500 pl-6 italic text-gray-800 my-8 py-2 bg-blue-50/50 rounded-r-xl">
-                        "Design is not just what it looks like and feels like. Design is how it works." — Steve Jobs
+                        "{postData.quotes}"
                     </blockquote>
 
-                    <h2>The Power of Whitespace</h2>
+                    <h2>{postData.blog_heading}</h2>
                     <p>
-                        Whitespace (or negative space) is arguably the most powerful tool in a designer's arsenal. It's the breathing room that allows your content to shine.
+                        {postData.blogtext}
                     </p>
 
                     <ul className="list-disc pl-6 mb-8 space-y-2">
-                        <li><strong>Macro whitespace:</strong> The space between major layout elements (like a header and main content).</li>
-                        <li><strong>Micro whitespace:</strong> The space between smaller elements (like list items or icon and text).</li>
-                        <li><strong>Active whitespace:</strong> Intentional spacing to guide the user's eye structure.</li>
+                        {postData.para}
                     </ul>
 
-                    <h2>Typography Hierarchy</h2>
+                    <h2>{postData.blog_heading}</h2>
                     <p>
-                        A strong typographic hierarchy allows readers to scan your content efficiently. By utilizing scale, weight, and color, you can dictate exactly what the user reads first, second, and third. Sticking to a maximum of two font families—one for headings and one for body text—is a golden rule for maintaining visual harmony.
+                        {postData.blogtext}
                     </p>
 
                     <div className="bg-gray-50 p-8 rounded-2xl my-10 border border-gray-100">
                         <h3 className="mt-0 text-xl font-bold">Key Takeaways</h3>
                         <ol className="mb-0">
-                            <li>Establish clear visual hierarchies early.</li>
-                            <li>Don't be afraid of empty space.</li>
-                            <li>Ensure interactive elements possess clear affordances.</li>
-                            <li>Test your interfaces with real users as often as possible.</li>
+                            <li>{postData.para}</li>
                         </ol>
                     </div>
 
                     <p>
-                        Crafting beautiful UI elements is a journey of continuous refinement. By grounding your designs in these core principles, you'll be well on your way to building products that aren't just usable—they're delightful.
+                        {postData.blogtext}
                     </p>
                 </article>
 
