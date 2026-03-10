@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function PostCard({ post }: any) {
     return (
-        <Link href="/post" className="flex flex-col group cursor-pointer h-full focus:outline-none focus:ring-4 focus:ring-blue-500/20 rounded-[2.5rem] p-2 -m-2">
+        <Link href={`/post/${post.id}`} className="flex flex-col group cursor-pointer h-full focus:outline-none focus:ring-4 focus:ring-blue-500/20 rounded-[2.5rem] p-2 -m-2">
             <div className="relative w-full aspect-4/3 rounded-4xl overflow-hidden mb-6 bg-gray-100">
                 <img
                     src={post.blog_image}

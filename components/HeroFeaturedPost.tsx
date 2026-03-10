@@ -3,7 +3,7 @@ import Link from 'next/link';
 export default function HeroFeaturedPost({ blogData }: { blogData?: any }) {
     console.log(blogData)
     return (
-        <Link href="/post" className="block relative w-full h-[400px] sm:h-[450px] md:h-[500px] lg:h-[550px] rounded-3xl overflow-hidden group cursor-pointer focus:outline-none focus:ring-4 focus:ring-blue-500/20">
+        <Link href={`/post/${blogData.id}`} className="block relative w-full h-[400px] sm:h-[450px] md:h-[500px] lg:h-[550px] rounded-3xl overflow-hidden group cursor-pointer focus:outline-none focus:ring-4 focus:ring-blue-500/20">
             <img
                 src={blogData.blog_image}
                 alt={blogData.blog_heading}

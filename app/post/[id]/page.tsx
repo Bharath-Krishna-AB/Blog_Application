@@ -2,8 +2,13 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Image from "next/image";
 import Link from "next/link";
+import { getBlogData } from "@/lib/api";
 
-export default function BlogPostPage() {
+export default async function BlogPostPage({ params }: { params: { id: string } }) {
+    const { id } = await params;
+    const blogData = await getBlogData();
+    const postData = blogData[id]
+    console.log("postData :", postData)
     return (
         <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-blue-100">
             <Navbar />
