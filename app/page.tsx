@@ -4,8 +4,11 @@ import FeaturedPostsSidebar from "@/components/FeaturedPostsSidebar";
 import RecentPostsGrid from "@/components/RecentPostsGrid";
 import SearchBar from "@/components/SearchBar";
 import Footer from "@/components/Footer";
+import { getBlogData } from "@/lib/api";
 
-export default function Home() {
+export default async function Home() {
+
+  const blogData = await getBlogData()
 
   return (
     <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-blue-100">
@@ -15,7 +18,7 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
           {/* Hero Section takes 2 columns on wide screens */}
           <div className="col-span-1 lg:col-span-2">
-            <HeroFeaturedPost />
+            <HeroFeaturedPost blogData={blogData[0]}/>
           </div>
 
           {/* Sidebar takes 1 column */}
