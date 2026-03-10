@@ -1,3 +1,4 @@
+import { getBlogData } from '@/lib/api';
 import PostCard from './PostCard';
 
 const recentPosts = [
@@ -30,7 +31,10 @@ const recentPosts = [
     }
 ];
 
-export default function RecentPostsGrid() {
+export default async function RecentPostsGrid() {
+
+    const blogData = await getBlogData();
+
     return (
         <div className="w-full mt-24 mb-16">
             <div className="flex justify-between items-center mb-10">
@@ -41,7 +45,7 @@ export default function RecentPostsGrid() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {recentPosts.map((post) => (
+                {blogData.slice(10,13).map((post: any) => (
                     <PostCard key={post.id} post={post} />
                 ))}
             </div>
