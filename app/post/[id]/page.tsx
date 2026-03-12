@@ -3,13 +3,74 @@ import Footer from "@/components/Footer";
 import Image from "next/image";
 import Link from "next/link";
 import { getBlogData } from "@/lib/api";
+import { Metadata, ResolvingMetadata } from "next";
+
+export async function generateMetadata(
+    { params }: { params: { id: string } },
+    parent: ResolvingMetadata
+): Promise<Metadata> {
+    const { id } = await params;
+    const blogData = await getBlogData();
+    const postData = blogData[id];
+
+    if (!postData) {
+        return {
+            title: "Post Not Found",
+        };
+    }
+
+    const title = postData.blog_heading;
+    const description = postData.blogtext.slice(0, 160) + "...";
+
+    // optionally access and extend (rather than replace) parent metadata
+    const previousImages = (await parent).openGraph?.images || []
+
+    return {
+        title,
+        description,
+        openGraph: {
+            title,
+            description,
+            type: "article",
+            publishedTime: new Date().toISOString(), // Fallback if actual date is not available in standard format
+            authors: [postData.name],
+            images: [postData.blog_image, ...previousImages],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title,
+            description,
+            images: [postData.blog_image],
+        },
+    };
+}
 
 export default async function BlogPostPage({ params }: { params: { id: string } }) {
     const { id } = await params;
     const blogData = await getBlogData();
-    const postData = blogData[id]
+    const postData = blogData[id];
+
+    // JSON-LD schema for Article
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: postData.blog_heading,
+        image: [postData.blog_image],
+        datePublished: new Date().toISOString(),
+        dateModified: new Date().toISOString(),
+        author: [{
+            "@type": "Person",
+            name: postData.name,
+        }]
+    };
+
     return (
         <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-blue-100">
+            {/* Inject JSON-LD structured data */}
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <Navbar />
 
             <main className="w-full max-w-4xl mx-auto px-4 md:px-8 pt-12 md:pt-16 pb-24">

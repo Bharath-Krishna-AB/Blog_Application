@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { getBlogData } from '@/lib/api';
 import PostCard from './PostCard';
 
@@ -39,22 +40,22 @@ export default async function RecentPostsGrid() {
         <div className="w-full mt-24 mb-16">
             <div className="flex justify-between items-center mb-10">
                 <h2 className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">Recent Posts</h2>
-                <button className="px-5 py-2.5 rounded-full border border-gray-200 text-gray-900 text-sm font-medium hover:bg-gray-50 transition-colors hidden sm:block">
+                <Link href="/blog" className="px-5 py-2.5 rounded-full border border-gray-200 text-gray-900 text-sm font-medium hover:bg-gray-50 transition-colors hidden sm:block">
                     All Posts
-                </button>
+                </Link>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {blogData.slice(10,13).map((post: any) => (
+                {blogData.slice(10, 13).map((post: any) => (
                     <PostCard key={post.id} post={post} />
                 ))}
             </div>
 
             {/* Mobile only "All Posts" button placed at the bottom */}
             <div className="mt-8 flex justify-center sm:hidden">
-                <button className="px-6 py-3 w-full rounded-full border border-gray-200 text-gray-900 text-sm font-medium hover:bg-gray-50 transition-colors">
+                <Link href="/blog" className="px-6 py-3 w-full text-center rounded-full border border-gray-200 text-gray-900 text-sm font-medium hover:bg-gray-50 transition-colors">
                     All Posts
-                </button>
+                </Link>
             </div>
         </div>
     );

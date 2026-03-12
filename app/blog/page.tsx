@@ -1,9 +1,22 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import RecentPostsGrid from "@/components/RecentPostsGrid";
 import SearchBar from "@/components/SearchBar";
+import PostCard from "@/components/PostCard";
+import { getBlogData } from "@/lib/api";
+import { Metadata } from "next";
 
-export default function BlogPage() {
+export const metadata: Metadata = {
+    title: "Our Insights",
+    description: "Browse all our articles, tutorials, and expert knowledge to elevate your UX design and development skills.",
+    openGraph: {
+        title: "Our Insights | Blog Application",
+        description: "Browse all our articles, tutorials, and expert knowledge to elevate your UX design and development skills.",
+    },
+};
+
+export default async function BlogPage() {
+    const blogData = await getBlogData();
+
     return (
         <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-blue-100">
             <Navbar />
@@ -20,9 +33,10 @@ export default function BlogPage() {
 
                 <SearchBar />
 
-                <div className="-mt-12 mb-24">
-                    {/* Reusing RecentPostsGrid from the homepage to save time and ensure visual consistency */}
-                    <RecentPostsGrid />
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24 -mt-4">
+                    {blogData.map((post: any) => (
+                        <PostCard key={post.id} post={post} />
+                    ))}
                 </div>
 
             </main>
