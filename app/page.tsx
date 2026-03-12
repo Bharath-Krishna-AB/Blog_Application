@@ -2,7 +2,6 @@ import Navbar from "@/components/Navbar";
 import HeroFeaturedPost from "@/components/HeroFeaturedPost";
 import FeaturedPostsSidebar from "@/components/FeaturedPostsSidebar";
 import RecentPostsGrid from "@/components/RecentPostsGrid";
-import SearchBar from "@/components/SearchBar";
 import Footer from "@/components/Footer";
 import { Metadata } from "next";
 import { getBlogData } from "@/lib/api";
@@ -39,7 +38,6 @@ export default async function Home() {
 
         <RecentPostsGrid />
 
-        <SearchBar />
       </main>
 
       <Footer />
